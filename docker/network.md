@@ -2,8 +2,7 @@
 
 ## membuat network
 
-docker network create -d bridge my-net
-docker run --network=my-net -itd --name=container3 busybox
+- `docker network create -d bridge net_name`
 
 ## beberapa opsi driver yang umum
 
@@ -17,5 +16,11 @@ Kontainer yang terhubung ke bridge network yang sama dapat berkomunikasi menggun
 
 network bisa dicopot/pasang ketika container sudah/akan dibuat:
 
-- `docker network disconnect network_name`
-- `docker network connect network_name`
+### Akan dibuat
+
+- `docker run --network=my-net -itd --name=container3 busybox`
+
+### Sudah dibuat
+
+- `docker network disconnect net_name cont_name`
+- `docker network connect net_name cont_name`

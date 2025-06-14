@@ -1,7 +1,9 @@
-Benar sekali! Penggunaan multi-stage builds dalam Docker dapat mengoptimalkan penggunaan cache dan ukuran image dengan cara memisahkan tahap build dan environment runtime. Mari kita bahas lebih detail:
+# Penjelasan
+
+Penggunaan multi-stage builds dalam Docker dapat mengoptimalkan penggunaan cache dan ukuran image dengan cara memisahkan tahap build dan environment runtime. Mari kita bahas lebih detail:
 
 1. **Pemanfaatan Cache dengan Layer yang Optimal**:
-   - Dalam multi-stage builds, tahap pertama (builder stage) digunakan untuk menjalankan semua proses build, termasuk instalasi dependencies dengan Composer. 
+   - Dalam multi-stage builds, tahap pertama (builder stage) digunakan untuk menjalankan semua proses build, termasuk instalasi dependencies dengan Composer.
    - Docker memanfaatkan cache untuk setiap layer. Jika Dockerfile diatur dengan baik, layer yang tidak berubah dapat digunakan ulang, sehingga tidak perlu di-build ulang setiap kali.
 
 2. **Ukuran Image yang Lebih Kecil**:
@@ -41,9 +43,8 @@ CMD ["php-fpm"]
 ```
 
 Pada Dockerfile di atas:
+
 - **Builder Stage**: Menggunakan image `composer:latest` untuk menginstal semua dependencies Laravel. Semua proses build, seperti caching konfigurasi dan routing Laravel, dilakukan di sini.
 - **Production Stage**: Menggunakan image yang lebih ringan `php:8.0-fpm`. Hanya file yang dibutuhkan untuk menjalankan aplikasi disalin dari builder stage ke sini. Composer tidak lagi diperlukan di environment runtime, sehingga image lebih ringan dan lebih cepat.
 
 Dengan pendekatan ini, Anda mendapatkan image yang lebih kecil dan penggunaan cache yang lebih efektif, yang mengoptimalkan waktu build dan penggunaan storage. 📦🚀
-
-Jika ada yang kurang jelas atau Anda butuh bantuan lebih lanjut, jangan ragu untuk bertanya!
