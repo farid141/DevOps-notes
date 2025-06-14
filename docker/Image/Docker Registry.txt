@@ -1,0 +1,20 @@
+registry bersifat public or private (sama seperti github). Beberapa registry populer 
+- Docker hub
+- Amazon Elastic Container Registry(ECR)
+- Azure Container Registry (ACR)
+- Google Container Registry (GCR)
+
+Untuk mempublish image ke registry dibutuhkan tag pada sebuah image
+docker tag <YOUR_DOCKER_USERNAME>/docker-quickstart <YOUR_DOCKER_USERNAME>/docker-quickstart:1.0
+
+docker compose
+digunakan untuk mengatur beberapa service (container), network, volumes, dll
+memerlukan script compose untuk berjalan
+
+Docker Image
+Sebuah image memiliki base layer atau history. Dapat dicek dengan
+docker image history node-base
+
+Docker caching memanfaatkan urutan tersebut untuk caching agar ketika build dengan step yang sama image tersebut akan mengcopy dari yang ada.
+
+jadi bagaimana urutan eksekusi compose, pertama mencari image masing2 service? apakah dirunning ulang jika dari dockerfile? kemudian apakah terhapus jika di matikan dan nyalakan lagi? bagaimana dengan volume dan networks?

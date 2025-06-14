@@ -1,0 +1,2 @@
+-a=[] berarti dapat digunakan beberapa kali dalam satu command
+docker run -a stdin -a stdout -i -t ubuntu /bin/bash

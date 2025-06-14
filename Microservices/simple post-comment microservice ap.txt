@@ -1,0 +1,29 @@
+simple post-comment microservice app
+post service: simpan dan get post (cors, express, axios)
+comment service: simpan dan get comment (cors, express, axios)
+
+karena comment selalu dan harus punya post, buat route posts/:id/comments
+axios untuk memanggil external service
+
+db service comment memiliki informasi post_id
+
+# request minimization strategies:
+cara 1 (sync):
+dalam aplikasi yang sudah dibuat sangat tidak efisien, karena saat meload halaman utama, masing-masing komponen post akan memanggil service comment untuk post id tersebut dari web/client
+
+cara 2 (async): menggunakan event broker dan query service
+service akan mengeluarkan event setelah data dibuat dan dapat dikonsum service lain
+query service akan tertarik semua event created tersebut untuk mengupdate db nya
+karena service ini memiliki data yang lengkap, maka halaman utama dapat mengkonsumnya daripada melalui post/comment service
+
+struktur db query service:
+post_id, title, comments[]
+
+event bus bertindak sebagai broker, dimana dia bertugas untuk menerima event dan menyebarkan event ke service
+service akan menerima event dari event-bus dan hanyakan memproses type-event tertentu
+
+# menambahkan service lain untuk mengubah data comment
+pada saat comment dibuat, status akan pending. Dan diproses oleh service moderatecomment. Dalam hal ini kan query service juga menerima update comment. Lebih baik moderate comment mengeluarkan event ke comment dan comment mengirim event genericCommentUpdated pada query service, agar query service melakukan cara update yang sama
+
+# handling missing event (event sync)
+ketika servis mati, tidak akan mendapat trigger update dari event sehingga data tidak sesuai. Untuk itu dibuat event bus datastore. Ketika servis nyala, akan minta ke datastore event apa saja yang tidak diproses ketika mati. Service menyimpan id event terakhirnya, sehingga dapat menentukan event mana saja yang belum terlewat
