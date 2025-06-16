@@ -16,11 +16,11 @@ Kontainer yang terhubung ke bridge network yang sama dapat berkomunikasi menggun
 
 network bisa dicopot/pasang ketika container sudah/akan dibuat:
 
-### Akan dibuat
+### Container Akan dibuat
 
 - `docker run --network=my-net -itd --name=container3 busybox`
 
-### Sudah dibuat
+### Container Telah dibuat
 
 - `docker network disconnect net_name cont_name`
 - `docker network connect net_name cont_name`
