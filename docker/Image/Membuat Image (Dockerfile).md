@@ -14,11 +14,11 @@ Dockerfile merupakan sebuah file yang berisi kumpulan instruksi untuk menggenera
 
 ## Commands
 
-Digunakan untuk menjalankan perintah terminal dari container
+Digunakan untuk menjalankan perintah terminal dari container. Dieksekusi saat runtime.
 
 ### Entrypoint
 
-berisi command yang menerima argumen (CMD atau default argument) yang dieksekusi ketika container akan berjalan.
+berisi command yang menerima argumen (CMD atau default argument) yang dieksekusi ketika container akan berjalan (runtime).
 
 ```dockerfile
 ENTRYPOINT ["executable", "param1", "param2"]
@@ -38,13 +38,39 @@ $ echo "Hello from CMD"
 
 >Jika ada beberapa CMD dalam Dockerfile, hanya CMD terakhir yang akan digunakan, yang sebelumnya akan diabaikan.
 
-### ADD vs COPY
+### ADD
 
-COPY hanya melakukan copy file saja, sedangkan ADD selain melakukan copy, dia bisa mendownload source dari URL dan secara otomatis melakukan extract file kompres
+sedangkan ADD selain melakukan copy, dia bisa mendownload source dari URL dan secara otomatis melakukan extract file kompres
 
-sebisa mungkin menggunakan COPY, jika memang butuh melakukan extract file kompres, gunakan perintah RUN dan jalankan aplikasi untuk extract file kompres tersebut
+### COPY
 
-.dockerignore: digunakan untuk exclude file host pada saat copy/add
+melakukan copy file dari direktori ke container. Sebisa mungkin menggunakan COPY, jika memang butuh melakukan extract file kompres, gunakan perintah RUN dan jalankan aplikasi untuk extract file kompres tersebut.
 
-ENV vs ARG
-keduanya merupakan sebuah variabel. Bedanya, ARG hanya akan dijalankan ketika build time saja, sedangkan ENV dapat berjalan ketika sudah menjadi container. ARG dapat diatur ketika membuat container dari sebuah image: --arg=asdd
+> perintah COPY dan ADD akan mengexlude nama file yang ada di `.dockerignore`
+
+### ENV
+
+sebuah variabel yang diakses saat build dan run time.
+
+### ARG
+
+sebuah variabel yang diakses saat build image.
+
+### RUN
+
+Menjalankan perintah saat build time, (akan berpengaruh terhadap image layer caching)
+
+Tips menjalankan RUN multi commands
+
+```bash
+# gunakan heredocs
+RUN <<EOF
+apt-get update
+apt-get install -y curl
+EOF
+
+# atau escape character
+RUN apt-get update\
+apt-get install -y curl
+
+```

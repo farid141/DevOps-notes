@@ -11,7 +11,7 @@ selama kita sudah memiliki docker image, kita tidak memerlukan dockerfile
 - `docker run -it [image-tag] [cmd]` = override CMD dengan cmd
 - `docker container ps`
 
-## Additional Info
+## Automatically Pull Image
 
 - Ketika sebuah image dari perintah pembuatan container tidak ditemukan di local, maka akan pull dari docker registry.
 
@@ -20,3 +20,7 @@ selama kita sudah memiliki docker image, kita tidak memerlukan dockerfile
 Ketika menjalankan sebuah container, kita dapat mengirim beberapa attribute.
 
 - port:  `-p 8080:80 nginx` atau `-P` untuk port random
+
+## Restart Behavior
+
+Ketika sebuah filesystem kontainer dimodifikasi dan direstart, maka modifikasi hilang. Dikarenakan ketika container reset, akan mereferensi ke image dan mengingat opsi yang disertakan dalam membuat container (port, env, dll)
