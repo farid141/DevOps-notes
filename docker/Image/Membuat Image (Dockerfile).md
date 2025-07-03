@@ -38,9 +38,16 @@ $ echo "Hello from CMD"
 
 >Jika ada beberapa CMD dalam Dockerfile, hanya CMD terakhir yang akan digunakan, yang sebelumnya akan diabaikan.
 
-### ADD vs COPY
+### ADD
 
-COPY hanya melakukan copy file saja, sedangkan ADD selain melakukan copy, dia bisa mendownload source dari URL dan secara otomatis melakukan extract file kompres
+```dockerfile
+ADD [OPTIONS] <src> ... <dest>
+ADD [OPTIONS] ["<src>", ... "<dest>"]
+```
+Menambahkan sebuah file/folder ke container bisa mendownload source dari URL dan secara otomatis melakukan extract file kompres
+
+###  COPY
+COPY hanya melakukan copy file saja, sedangkan ADD selain melakukan copy, 
 
 sebisa mungkin menggunakan COPY, jika memang butuh melakukan extract file kompres, gunakan perintah RUN dan jalankan aplikasi untuk extract file kompres tersebut
 
